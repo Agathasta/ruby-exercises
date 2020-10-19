@@ -24,3 +24,4 @@ def caesar_cipher(str, shift)
 end
 
 caesar_cipher("What a string!", 5)
+caesar_cipher("What a string!", -5)
