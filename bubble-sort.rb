@@ -1,12 +1,17 @@
 def bubble_sort(arr)
-    until arr == arr.sort do
-        for i in 0...arr.length - 1
-            pair = [arr[i], arr[i + 1]]
-            pair.sort!
-            arr.delete_at(i+1)
-            arr.delete_at(i)
-            arr.insert(i, pair[0], pair[1])
+    length = arr.length - 1
+    loop do
+        swap = false
+        for i in 0...length
+            if arr[i] > arr[i + 1]
+                x = arr[i + 1]
+                arr[i + 1] = arr[i]
+                arr[i] = x
+                swap = true
+            end
         end
+        length -= 1
+        break if swap == false
     end
     p arr
 end
