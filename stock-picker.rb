@@ -1,21 +1,15 @@
-def stock_picker (arr)
-    profit = 0
-    profit_new = 0
-    pairs = []
+def stock_picker (stocks)
+    max_profit = 0
 
-    for i in (0...arr.length)
-        for j in ((i + 1)...arr.length)
-            if arr[i] < arr[j] 
-                profit_new = arr[j] - arr[i]
-            end
-            if profit_new > profit
-                profit = profit_new
-                pairs = [i,j]
+    for i in (0...stocks.length)
+        for j in ((i + 1)...stocks.length)
+            if stocks[j] - stocks[i] > max_profit
+                max_profit = stocks[j] - stocks[i]
+                days = [i,j]
             end
         end
     end
-    p profit
-    p pairs
+    p days
 end
 
-stock_picker([17,3,6,9,15,8,6,1,10])
+stock_picker([17,3,6,9,15,8,6,2,10,1])
