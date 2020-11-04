@@ -57,4 +57,21 @@ end
 
 ###########################################
 
+def my_all?(proc = nil)
+  self.my_each do |e|
+    if proc == nil
+      return false unless yield(e)
+    else
+      return false unless proc.call(e)
+    end
+  end
+  true
+end
+
+# [4,2,6].my_all?{|item| item.even?}
+
+# my_proc = Proc.new{|item| item.even?}
+# [1,2,5].my_all?(my_proc)
+
+###########################################
 
