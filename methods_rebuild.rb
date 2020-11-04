@@ -75,3 +75,19 @@ end
 
 ###########################################
 
+def my_inject(acc = 0, proc = nil)
+  acc = self[0] unless acc == 0
+  self.my_each do |e|
+    if proc == nil
+      acc = yield(acc, e)
+    else
+      acc = proc.call(acc, e)
+    end
+  end
+  acc
+end
+
+# [1,2,5].my_inject(0) {|memo, item| memo + item}
+
+# my_proc = Proc.new{|memo, item| memo + item}
+# [1,2,5].my_inject(0, my_proc)
