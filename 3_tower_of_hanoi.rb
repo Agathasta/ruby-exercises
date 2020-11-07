@@ -19,7 +19,7 @@ class Board
   end
 
   def display
-    @coord = [0, 1]
+    @coord = [0, 1] # change this to enter coord manually!!
     idx = @board[@coord[0]].find_index {|pos| pos.include? "o"}
     temp = @board[@coord[0]][idx]
     @board[@coord[0]][idx] = "|"
