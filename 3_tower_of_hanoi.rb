@@ -1,10 +1,10 @@
 # program ToH
 
-#   ask user num of disks   GAME
+#   √ ask user num of disks   GAME
 #   √ create board    BOARD
 #   √ display boards    BOARD
 #   loop do   GAME
-#     ask user coordinates   GAME
+#     √ ask user coordinates   GAME
 #     if position is not empty    BOARD
 #       display message
 #     elsif there is a smaller disk before    BOARD
@@ -68,7 +68,7 @@ class Board
     loop do
       puts "Where to move?"
       @coord = gets.chomp.split(" ").map{|c| c.to_i - 1}
-      break if check_coordinates_format
+      break if check_coordinates_format && check_coordinates_start
     end
   end
 
@@ -79,6 +79,15 @@ class Board
       puts "Wrong input!"
     end
   end
+
+  def check_coordinates_start
+    if @board[@coord[0]][@n - 1].nil?
+      puts "No disk on that column"
+    else 
+      true
+    end
+  end
+
 
   def new_board
     column_0 = @board[@coord[0]]
