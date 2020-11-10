@@ -40,14 +40,14 @@ class Board
     @n = gets.chomp.to_i
     @board = Array.new(3){Array.new(@n)}
     @board[0] = (1..@n).map {|n| "o" * n }
-    # @board[1] = (1..@n).map {|n| "" }
-    # @board[2] = (1..@n).map {|n| "" }
+    @round = 1
     display
   end
 
   def display
     puts
     puts "1\t2\t3"
+    puts "__________________"
     i = 0
     while i < @n
       puts "#{@board[0][i]}\t#{@board[1][i]}\t#{@board[2][i]}"
@@ -57,8 +57,27 @@ class Board
   end
 
   def coordinates?
-    puts "Where to move?"
-    @coord = gets.chomp.split(",").map{|c| c.to_i - 1}
+    if @round == 1
+      puts "To move the disks, input two numbers separated by a space:"
+      puts  "the first one is the column you take the disk FROM,"
+      puts  "the second is the column you move the disk TO."
+      puts "V.gr.: 1 3 will move the disk from column 1 to column 3."
+      puts
+      @round = "x"
+    end
+    loop do
+      puts "Where to move?"
+      @coord = gets.chomp.split(" ").map{|c| c.to_i - 1}
+      break if check_coordinates_format
+    end
+  end
+
+  def check_coordinates_format
+    if ((0..2).include? (@coord[0])) && ((0..2).include? (@coord[1]))
+      true
+    else
+      puts "Wrong input!"
+    end
   end
 
   def new_board
