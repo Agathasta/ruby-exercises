@@ -18,21 +18,19 @@
 #       stop loop
 #   end
 
-# end
-
 class Game
   def initialize
     @board = Board.new
   end
 
   def play
+    3.times do
     @board.coordinates?
     @board.new_board
+    end
   end
 
 end
-
-
 
 class Board
   attr_accessor :board
@@ -42,12 +40,14 @@ class Board
     @n = gets.chomp.to_i
     @board = Array.new(3){Array.new(@n)}
     @board[0] = (1..@n).map {|n| "o" * n }
-    @board[1] = (1..@n).map {"|"}
-    @board[2] = (1..@n).map {"|"}
+    # @board[1] = (1..@n).map {|n| "" }
+    # @board[2] = (1..@n).map {|n| "" }
     display
   end
 
   def display
+    puts
+    puts "1\t2\t3"
     i = 0
     while i < @n
       puts "#{@board[0][i]}\t#{@board[1][i]}\t#{@board[2][i]}"
@@ -59,37 +59,22 @@ class Board
   def coordinates?
     puts "Where to move?"
     @coord = gets.chomp.split(",").map{|c| c.to_i - 1}
-    print @coord
-    puts
   end
 
   def new_board
-    idx = @board[@coord[0]].find_index {|pos| pos.include? "o"}
-    temp = @board[@coord[0]][idx]
-    @board[@coord[0]][idx] = "|"
+    column_0 = @board[@coord[0]]
+    column_1 = @board[@coord[1]]
 
-    idx = @board[@coord[1]].find_index {|pos| pos.include? "|"}
-    @board[@coord[1]][idx] = temp
+    @disk = column_0.find {|d| !d.nil?}
+    column_0[column_0.index(@disk)] = nil
 
+    column_1.shift
+    idx = column_1.find_index {|d| !d.nil?} || @n - 1
+    column_1.insert(idx, @disk)
     display
+
   end
-
 end
-
-# @board = [[o, oo, ooo, oooo], [nil, nil, nil, nil], [nil, nil, nil, nil]]
-
-
-#     @board.each do |row|
-#       row.each do
-#         puts i + @n
-#       end
-#       puts
-#     end  
-#   end
-# end
-
-
 
 game = Game.new
 game.play
-
