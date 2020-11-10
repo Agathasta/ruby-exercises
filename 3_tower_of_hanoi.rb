@@ -24,9 +24,9 @@ class Game
   end
 
   def play
-    3.times do
-    @board.coordinates?
-    @board.new_board
+    until @board.winning?
+      @board.coordinates?
+      @board.new_board
     end
   end
 
@@ -72,7 +72,10 @@ class Board
     idx = column_1.find_index {|d| !d.nil?} || @n - 1
     column_1.insert(idx, @disk)
     display
+  end
 
+  def winning?
+    @board[2] == (1..@n).map {|n| "o" * n }
   end
 end
 
