@@ -1,4 +1,4 @@
-require 'pry'
+# frozen_string_literal: true
 
 def merge_sort(arr, sorted_arr = [])
   if arr.size < 2
@@ -13,16 +13,13 @@ def merge_sort(arr, sorted_arr = [])
         sorted_arr << left.shift
       else
         compare = left <=> right
-        if compare == -1
-          sorted_arr << left.shift
-        else
-          sorted_arr << right.shift
-        end
+        sorted_arr << (compare == -1 ? left.shift : right.shift)
       end
     end
     sorted_arr
   end
 end
 
-array = [3, 65, 1, 98, 28, 4, 6, 22, 13, 1, 0]
-puts merge_sort(array)
+p array = [3, 65, 1, 98, 28, 4, 6, 22, 13, 1, 0]
+p merge_sort(array)
+puts "The result of merge_sort is the same as Array#sort: #{merge_sort(array) == array.sort}"
