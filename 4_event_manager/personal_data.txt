@@ -1,0 +1,39 @@
+
+*** PERSONAL DATA ***
+1	Allison		20010	(615) 438-5000
+2	SArah		20009	(414) 520-5000
+3	Sarah		33703	(941) 979-2000
+4	David		07306	(650) 799-0000
+5	Chris		00000	(613) 565-4000
+6	Aya		90210	(778) 232-7000
+7	Mary		21230	(202) 328-1000
+8	Audrey		95667	(530) 919-3000
+9	Shiyu		96734	(808) 497-4000
+10	Eli		92037	(858) 405-3000
+11	Colin		02703	(401) 868-5000
+12	Megan		43201	(315) 450-6000
+13	Meggie		94611	(510) 282-4000
+14	Laura		00924	(787) 295-0000
+15	Paul		14517	Wrong number
+16	Shannon		03082	(603) 305-3000
+17	Shannon		98122	(530) 355-7000
+18	Nash		98122	(206) 226-3000
+19	Amanda		14841	(607) 280-2000
+
+*** REGISTRATION DATA ***
+16:00 => 3 times
+13:00 => 3 times
+21:00 => 2 times
+11:00 => 2 times
+19:00 => 2 times
+20:00 => 2 times
+15:00 => 1 time
+10:00 => 1 time
+01:00 => 1 time
+17:00 => 1 time
+18:00 => 1 time
+Wednesday => 7 times
+Thursday => 5 times
+Sunday => 4 times
+Monday => 2 times
+Tuesday => 1 time
