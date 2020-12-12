@@ -1,11 +1,12 @@
+# frozen_string_literal: true
 
 class Game
-  CHOICES = %w[Rock Paper Scissors]
-  WINNING = [["Paper", "Rock"],["Rock", "Scissors"],["Scissors", "Paper"]]
+  CHOICES = %w[Rock Paper Scissors].freeze
+  WINNING = [%w[Paper Rock], %w[Rock Scissors], %w[Scissors Paper]].freeze
 
   def initialize
-    @player_1 = Player.new("Player 1")
-    @player_2 = Player.new("Player 2")
+    @player_1 = Player.new('Player 1')
+    @player_2 = Player.new('Player 2')
     @current_player = @player_1
   end
 
@@ -20,18 +21,18 @@ class Game
   end
 
   def switch_player
-    system("clear")
+    system('clear')
     @current_player = @current_player == @player_1 ? @player_2 : @player_1
   end
 
   def winner
     result = [@player_1.choice, @player_2.choice]
     puts "\n#{@player_1.name} chooses #{@player_1.choice}, and #{@player_2.name} chooses #{@player_2.choice}."
-    puts "That means thaaaaat..."
+    puts 'That means thaaaaat...'
     if result[0] == result[1]
       puts "...you're tied, try again\n\n"
       false
-    else 
+    else
       puts WINNING.include?(result) ? "#{@player_1.name.upcase} WINS!!" : "#{@player_2.name.upcase} WINS!!\n\n"
       true
     end
@@ -55,16 +56,16 @@ class Player
 
   def ask_choice
     puts "#{@name}, choose Rock (R), Paper (P) or Scissors (S)" if @choice.nil?
-    case (gets.chomp.upcase)
-      when /p/i then "Paper"
-      when /r/i then "Rock"
-      when /s/i then "Scissors"
-      else ""
+    case gets.chomp.upcase
+    when /p/i then 'Paper'
+    when /r/i then 'Rock'
+    when /s/i then 'Scissors'
+    else ''
     end
   end
 
   def valid_choice?(choice)
-    if choice.match /[rps]/i
+    if choice.match(/[rps]/i)
       true
     else
       puts "That's not a valid option! Choose R, P or S"
@@ -76,8 +77,7 @@ end
 game = Game.new
 game.play
 
-
-###AGAINST COMPUTER
+# ##AGAINST COMPUTER
 # class Game
 #   def initialize
 #     @player_1 = Player.new("Player 1")
@@ -145,4 +145,3 @@ game.play
 
 # game = Game.new
 # game.play
-
