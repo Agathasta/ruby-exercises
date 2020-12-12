@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Tree
-  attr_reader :root
+  attr_reader :root, :array
 
   def initialize(array)
     @array = array.uniq.sort
@@ -58,13 +58,15 @@ class Node
   end
 end
 
-tree = Tree.new([28, 32, 38, 28, 30, 6, 86, 23, 58, 77, 23, 42, 14, 23, 85, 45, 16])
-# [6, 14, 16, 23, 28, 30, 32, 38, 42, 45, 58, 77, 85, 86]
-tree.pretty_print
-puts '--------------------------------'
-tree.insert(11)
-tree.insert(28)
+tree = Tree.new(Array.new(15) { rand(1..100) })
+p tree.array
+
 tree.pretty_print
 puts '--------------------------------'
 
-# tree = Tree.new(Array.new(15) { rand(1..100) })
+tree.insert(11)
+tree.insert(28)
+tree.insert(tree.array[0])
+
+tree.pretty_print
+puts '--------------------------------'
