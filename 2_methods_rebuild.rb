@@ -19,7 +19,6 @@ end
 # my_proc = Proc.new{|item| puts item**2}
 # [1,2,5].my_each(my_proc)
 
-
 def my_map(proc = nil)
   arr = []
   my_each do |e|
@@ -36,7 +35,6 @@ end
 
 # my_proc = Proc.new{|item| item**2}
 # [1,2,5].my_map(my_proc)
-
 
 def my_select(proc = nil)
   arr = []
@@ -55,7 +53,6 @@ end
 # my_proc = Proc.new{|item| item.even?}
 # [1,2,5].my_select(my_proc)
 
-
 def my_all?(proc = nil)
   my_each do |e|
     if proc.nil?
@@ -71,7 +68,6 @@ end
 
 # my_proc = Proc.new{|item| item.even?}
 # [1,2,5].my_all?(my_proc)
-
 
 def my_inject(acc = 0, proc = nil)
   acc = self[0] unless acc.zero?
