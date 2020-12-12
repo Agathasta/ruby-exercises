@@ -19,7 +19,7 @@ class Tree
   end
 
   def insert(data, node = root)
-    return puts 'That data already exists' if node.data == data
+    return nil if node.data == data
 
     if data < node.data
       node.left.nil? ? node.left = Node.new(data) : insert(data, node.left)
@@ -34,6 +34,12 @@ class Tree
   #   if data < node.data
   #   end
   # end
+
+  def pretty_print(node = root, prefix = '', is_left = true)
+    pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
+    puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
+    pretty_print(node.left, "#{prefix}#{is_left ? '    ' : '│   '}", true) if node.left
+  end
 end
 
 class Node
@@ -54,17 +60,11 @@ end
 
 tree = Tree.new([28, 32, 38, 28, 30, 6, 86, 23, 58, 77, 23, 42, 14, 23, 85, 45, 16])
 # [6, 14, 16, 23, 28, 30, 32, 38, 42, 45, 58, 77, 85, 86]
+tree.pretty_print
+puts '--------------------------------'
 tree.insert(11)
-puts tree.root.left.left.left.right.data
 tree.insert(28)
-
-# puts tree.root.data
-# puts tree.root.left.data
-# puts tree.root.left.left.data
-# puts tree.root.left.left.left.data
-# puts tree.root.right.data
-# puts tree.root.right.left.data
-# puts tree.root.right.left.left.data
-# puts tree.root.right.left.right.data
+tree.pretty_print
+puts '--------------------------------'
 
 # tree = Tree.new(Array.new(15) { rand(1..100) })
