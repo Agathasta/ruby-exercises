@@ -21,7 +21,7 @@ my_proc = proc { |item| puts item**2 }
 
 def my_map(proc = nil)
   arr = []
-  my_each do |e|
+  self.my_each do |e|
     arr << if proc.nil?
              yield(e)
            else
