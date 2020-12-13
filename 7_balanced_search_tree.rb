@@ -65,26 +65,17 @@ class Tree
   end
 
   def find(data, node = root)
+    return nil if node.nil?
     return node if data == node.data
 
-    if data < node.data
-      node.left.nil? ? nil : find(data, node.left)
-    else
-      node.right.nil? ? nil : find(data, node.right)
-    end
+    data < node.data ? find(data, node.left) : find(data, node.right)
   end
 
   def find_parent(node, parent = root)
     return nil if node == parent
-    if (!parent.right.nil? && parent.right == node) || (!parent.left.nil? && parent.left == node)
-      return parent
-    end
+    return parent if [parent.left, parent.right].include?(node)
 
-    if node.data < parent.data
-      parent.left.nil? ? nil : find_parent(node, parent.left)
-    else
-      parent.right.nil? ? nil : find_parent(node, parent.right)
-    end
+    node.data < parent.data ? find_parent(node, parent.left) : find_parent(node, parent.right)
   end
 
   def find_next_bigger(node)
@@ -93,6 +84,7 @@ class Tree
     find_next_bigger(node.left)
   end
 
+  # from a student in The Odin Project
   def pretty_print(node = root, prefix = '', is_left = true)
     pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
@@ -101,7 +93,7 @@ class Tree
 end
 
 class Node
-  include Comparable
+  # include Comparable
   attr_accessor :data, :left, :right
 
   def initialize(data, left = nil, right = nil)
@@ -126,10 +118,10 @@ class Node
   #   [left, right] if !left.nil? && !right.nil?
   # end
 
-  def <=>(other)
-    value = other.class == Node ? other.data : other
-    data <=> value
-  end
+  # def <=>(other)
+  #   value = other.instance_of?(Node) ? other.data : other
+  #   data <=> value
+  # end
 end
 
 tree = Tree.new(Array.new(15) { rand(1..100) })
