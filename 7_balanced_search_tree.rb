@@ -28,12 +28,70 @@ class Tree
     end
   end
 
-  # Write a #delete method which accepts a value to delete
-  # (you’ll have to deal with several cases for delete such as when a node has children or not).
-  # def delete(node = root, data)
-  #   if data < node.data
-  #   end
-  # end
+  def delete(data)
+    node = find(data)
+    return nil if node.nil?
+
+    if node.is_leaf?
+      delete_leaf(node)
+    elsif node.one_child
+      delete_w_one_child(node)
+    else
+      delete_w_two_children(node)
+    end
+  end
+
+  def delete_leaf(node)
+    parent = find_parent(node)
+    node.data < parent.data ? parent.left = nil : parent.right = nil
+  end
+
+  def delete_w_one_child(node)
+    parent = find_parent(node)
+    node.data < parent.data ? parent.left = node.one_child : parent.right = node.one_child
+  end
+
+  def delete_w_two_children(node)
+    parent = find_parent(node)
+    next_bigger = find_next_bigger(node.right)
+    next_bigger.is_leaf? ? delete_leaf(next_bigger) : delete_w_one_child(next_bigger)
+    if parent.nil?
+      @root = next_bigger
+    else
+      node.data < parent.data ? parent.left = next_bigger : parent.right = next_bigger
+    end
+    next_bigger.left = node.left
+    next_bigger.right = node.right
+  end
+
+  def find(data, node = root)
+    return node if data == node.data
+
+    if data < node.data
+      node.left.nil? ? nil : find(data, node.left)
+    else
+      node.right.nil? ? nil : find(data, node.right)
+    end
+  end
+
+  def find_parent(node, parent = root)
+    return nil if node == parent
+    if (!parent.right.nil? && parent.right == node) || (!parent.left.nil? && parent.left == node)
+      return parent
+    end
+
+    if node.data < parent.data
+      parent.left.nil? ? nil : find_parent(node, parent.left)
+    else
+      parent.right.nil? ? nil : find_parent(node, parent.right)
+    end
+  end
+
+  def find_next_bigger(node)
+    return node if node.left.nil?
+
+    find_next_bigger(node.left)
+  end
 
   def pretty_print(node = root, prefix = '', is_left = true)
     pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
@@ -44,7 +102,6 @@ end
 
 class Node
   include Comparable
-
   attr_accessor :data, :left, :right
 
   def initialize(data, left = nil, right = nil)
@@ -53,12 +110,30 @@ class Node
     @right = right
   end
 
+  def is_leaf?
+    left.nil? && right.nil?
+  end
+
+  def one_child
+    if left.nil? && !right.nil?
+      right
+    elsif !left.nil? && right.nil?
+      left
+    end
+  end
+
+  # def two_children
+  #   [left, right] if !left.nil? && !right.nil?
+  # end
+
   def <=>(other)
-    data <=> other.data
+    value = other.class == Node ? other.data : other
+    data <=> value
   end
 end
 
 tree = Tree.new(Array.new(15) { rand(1..100) })
+# tree = Tree.new([34, 36, 39, 60, 64, 67, 70, 79, 82, 87, 89, 92, 100])
 p tree.array
 
 tree.pretty_print
@@ -67,6 +142,13 @@ puts '--------------------------------'
 tree.insert(11)
 tree.insert(28)
 tree.insert(tree.array[0])
+
+tree.pretty_print
+puts '--------------------------------'
+
+puts 'Enter number to delete'
+to_delete = gets.chomp.to_i
+tree.delete(to_delete)
 
 tree.pretty_print
 puts '--------------------------------'
