@@ -50,6 +50,30 @@ class Tree
     level_order(queue.shift, queue, ordered)
   end
 
+  def pre_order(current = root, ordered = [])
+    return ordered if current.nil?
+
+    ordered << current.data
+    pre_order(current.left, ordered)
+    pre_order(current.right, ordered)
+  end
+
+  def in_order(current = root, ordered = [])
+    return ordered if current.nil?
+
+    in_order(current.left, ordered)
+    ordered << current.data
+    in_order(current.right, ordered)
+  end
+
+  def post_order(current = root, ordered = [])
+    return ordered if current.nil?
+    
+    post_order(current.left, ordered)
+    post_order(current.right, ordered)
+    ordered << current.data
+  end
+
   # from a student in The Odin Project
   def pretty_print(node = root, prefix = '', is_left = true)
     pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
@@ -157,3 +181,6 @@ puts '--------------------------------'
 # puts '--------------------------------'
 
 puts "Level order: #{tree.level_order}"
+puts "Pre order: #{tree.pre_order}"
+puts "In order: #{tree.in_order}"
+puts "Post order: #{tree.post_order}"
