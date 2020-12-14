@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Tree
-  attr_reader :root, :array
+  attr_reader :root
 
   def initialize(array)
     @array = array.uniq.sort
@@ -68,7 +68,7 @@ class Tree
 
   def post_order(current = root, ordered = [])
     return ordered if current.nil?
-    
+
     post_order(current.left, ordered)
     post_order(current.right, ordered)
     ordered << current.data
@@ -80,17 +80,8 @@ class Tree
     1 + [height_tree(node.left), height_tree(node.right)].max
   end
 
-  def height_node(data)
-    node = find(data)
-    height_tree(node)
-  end
-
-  def depth_node(data)
-    height_tree - height_node(data)
-  end
-
   def balanced?(node = root)
-    (height_tree(node.left) - height_tree(node.right)).abs <= 1 ? true : false
+    (height_tree(node.left) - height_tree(node.right)).abs <= 1
   end
 
   def rebalance
@@ -106,6 +97,7 @@ class Tree
 
   private
 
+  # Helper methods for #delete
   def delete_leaf(node)
     parent = find_parent(node)
     node.data < parent.data ? parent.left = nil : parent.right = nil
@@ -148,7 +140,19 @@ class Tree
 
     find_next_bigger(node.left)
   end
+
+  # Part of the exercise (must be public to be used)
+  def height_node(data)
+    node = find(data)
+    height_tree(node)
+  end
+
+  def depth_node(data)
+    height_tree - height_node(data)
+  end
 end
+
+
 
 class Node
   attr_accessor :data, :left, :right
@@ -172,44 +176,33 @@ class Node
   end
 end
 
+# Driver script
+puts
+puts '*** BALANCED SEARCH TREE ***'
 tree = Tree.new(Array.new(15) { rand(1..100) })
-# tree = Tree.new([34, 36, 39, 60, 64, 67, 70, 79, 82, 87, 89, 92, 100])
-p tree.array
 puts tree.balanced? ? 'Balanced :)' : 'Not balanced :('
-
-# tree.pretty_print
-# puts '--------------------------------'
-
-tree.insert(11)
-tree.insert(28)
-tree.insert(29)
-tree.insert(30)
-tree.insert(tree.array[0])
-
-# tree.pretty_print
-# puts '--------------------------------'
-
-# puts 'Enter number to delete'
-# to_delete = gets.chomp.to_i
-# tree.delete(to_delete)
-
 tree.pretty_print
-puts '--------------------------------'
-
 puts "Level order: #{tree.level_order}"
 puts "Pre order: #{tree.pre_order}"
 puts "In order: #{tree.in_order}"
 puts "Post order: #{tree.post_order}"
-# puts "Height of tree is #{tree.height_tree}"
-# puts "Height of node #{tree.array[0]} is #{tree.height_node(tree.array[0])}"
-# puts "Depth of node #{tree.array[0]} is #{tree.depth_node(tree.array[0])}"
-# puts "Height of node #{tree.array[3]} is #{tree.height_node(tree.array[3])}"
-# puts "Depth of node #{tree.array[3]} is #{tree.depth_node(tree.array[3])}"
-# puts "Height of node #{tree.array[6]} is #{tree.height_node(tree.array[6])}"
-# puts "Depth of node #{tree.array[6]} is #{tree.depth_node(tree.array[6])}"
-puts tree.balanced? ? 'Balanced :)' : 'Not balanced :('
-tree.rebalance
-puts tree.balanced? ? 'Balanced :)' : 'Not balanced :('
+puts 'Enter number to delete:'
+print '> '
+to_delete = gets.chomp.to_i
+tree.delete(to_delete)
+puts "Insert #{tree.insert(rand(100..150)).data}"
+puts "Insert #{tree.insert(rand(100..150)).data}"
+puts "Insert #{tree.insert(rand(100..150)).data}"
+puts "Insert #{tree.insert(rand(100..150)).data}"
 tree.pretty_print
-puts '--------------------------------'
-
+puts tree.balanced? ? 'Balanced :)' : 'Not balanced :('
+unless tree.balanced?
+  puts 'Rebalancing...'
+  tree.rebalance
+  tree.pretty_print
+  puts tree.balanced? ? 'Balanced :)' : 'Not balanced :('
+  puts "Level order: #{tree.level_order}"
+  puts "Pre order: #{tree.pre_order}"
+  puts "In order: #{tree.in_order}"
+  puts "Post order: #{tree.post_order}"
+end
