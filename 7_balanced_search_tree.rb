@@ -74,6 +74,18 @@ class Tree
     ordered << current.data
   end
 
+  def height_tree(node = root)
+    return 0 if node.nil?
+
+    1 + [height_tree(node.left), height_tree(node.right)].max
+  end
+
+  def height_node(data)
+    node = find(data)
+    height_tree(node)
+  end
+
+
   # from a student in The Odin Project
   def pretty_print(node = root, prefix = '', is_left = true)
     pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
@@ -184,3 +196,7 @@ puts "Level order: #{tree.level_order}"
 puts "Pre order: #{tree.pre_order}"
 puts "In order: #{tree.in_order}"
 puts "Post order: #{tree.post_order}"
+puts "Height of tree is #{tree.height_tree}"
+puts "Height of node #{tree.array[0]} is #{tree.height_node(tree.array[0])}"
+puts "Height of node #{tree.array[3]} is #{tree.height_node(tree.array[3])}"
+puts "Height of node #{tree.array[6]} is #{tree.height_node(tree.array[6])}"
