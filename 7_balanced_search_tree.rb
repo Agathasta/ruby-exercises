@@ -85,6 +85,17 @@ class Tree
     height_tree(node)
   end
 
+  def depth_node(data)
+    height_tree - height_node(data)
+  end
+
+  def balanced?(node = root)
+    (height_tree(node.left) - height_tree(node.right)).abs <= 1 ? true : false
+  end
+
+  def rebalance
+    @root = build_tree(in_order)
+  end
 
   # from a student in The Odin Project
   def pretty_print(node = root, prefix = '', is_left = true)
@@ -140,7 +151,6 @@ class Tree
 end
 
 class Node
-  # include Comparable
   attr_accessor :data, :left, :right
 
   def initialize(data, left = nil, right = nil)
@@ -160,27 +170,21 @@ class Node
       left
     end
   end
-
-  # def two_children
-  #   [left, right] if !left.nil? && !right.nil?
-  # end
-
-  # def <=>(other)
-  #   value = other.instance_of?(Node) ? other.data : other
-  #   data <=> value
-  # end
 end
 
 tree = Tree.new(Array.new(15) { rand(1..100) })
 # tree = Tree.new([34, 36, 39, 60, 64, 67, 70, 79, 82, 87, 89, 92, 100])
 p tree.array
+puts tree.balanced? ? 'Balanced :)' : 'Not balanced :('
 
-tree.pretty_print
-puts '--------------------------------'
+# tree.pretty_print
+# puts '--------------------------------'
 
-# tree.insert(11)
-# tree.insert(28)
-# tree.insert(tree.array[0])
+tree.insert(11)
+tree.insert(28)
+tree.insert(29)
+tree.insert(30)
+tree.insert(tree.array[0])
 
 # tree.pretty_print
 # puts '--------------------------------'
@@ -189,14 +193,23 @@ puts '--------------------------------'
 # to_delete = gets.chomp.to_i
 # tree.delete(to_delete)
 
-# tree.pretty_print
-# puts '--------------------------------'
+tree.pretty_print
+puts '--------------------------------'
 
 puts "Level order: #{tree.level_order}"
 puts "Pre order: #{tree.pre_order}"
 puts "In order: #{tree.in_order}"
 puts "Post order: #{tree.post_order}"
-puts "Height of tree is #{tree.height_tree}"
-puts "Height of node #{tree.array[0]} is #{tree.height_node(tree.array[0])}"
-puts "Height of node #{tree.array[3]} is #{tree.height_node(tree.array[3])}"
-puts "Height of node #{tree.array[6]} is #{tree.height_node(tree.array[6])}"
+# puts "Height of tree is #{tree.height_tree}"
+# puts "Height of node #{tree.array[0]} is #{tree.height_node(tree.array[0])}"
+# puts "Depth of node #{tree.array[0]} is #{tree.depth_node(tree.array[0])}"
+# puts "Height of node #{tree.array[3]} is #{tree.height_node(tree.array[3])}"
+# puts "Depth of node #{tree.array[3]} is #{tree.depth_node(tree.array[3])}"
+# puts "Height of node #{tree.array[6]} is #{tree.height_node(tree.array[6])}"
+# puts "Depth of node #{tree.array[6]} is #{tree.depth_node(tree.array[6])}"
+puts tree.balanced? ? 'Balanced :)' : 'Not balanced :('
+tree.rebalance
+puts tree.balanced? ? 'Balanced :)' : 'Not balanced :('
+tree.pretty_print
+puts '--------------------------------'
+
