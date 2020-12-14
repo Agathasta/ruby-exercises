@@ -41,6 +41,24 @@ class Tree
     end
   end
 
+  def level_order(current = root, queue = [], ordered = [])
+    ordered << current.data
+    queue << current.left unless current.left.nil?
+    queue << current.right unless current.right.nil?
+    return ordered if queue.empty?
+
+    level_order(queue.shift, queue, ordered)
+  end
+
+  # from a student in The Odin Project
+  def pretty_print(node = root, prefix = '', is_left = true)
+    pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
+    puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
+    pretty_print(node.left, "#{prefix}#{is_left ? '    ' : '│   '}", true) if node.left
+  end
+
+  private
+
   def delete_leaf(node)
     parent = find_parent(node)
     node.data < parent.data ? parent.left = nil : parent.right = nil
@@ -83,13 +101,6 @@ class Tree
 
     find_next_bigger(node.left)
   end
-
-  # from a student in The Odin Project
-  def pretty_print(node = root, prefix = '', is_left = true)
-    pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
-    puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
-    pretty_print(node.left, "#{prefix}#{is_left ? '    ' : '│   '}", true) if node.left
-  end
 end
 
 class Node
@@ -131,16 +142,18 @@ p tree.array
 tree.pretty_print
 puts '--------------------------------'
 
-tree.insert(11)
-tree.insert(28)
-tree.insert(tree.array[0])
+# tree.insert(11)
+# tree.insert(28)
+# tree.insert(tree.array[0])
 
-tree.pretty_print
-puts '--------------------------------'
+# tree.pretty_print
+# puts '--------------------------------'
 
-puts 'Enter number to delete'
-to_delete = gets.chomp.to_i
-tree.delete(to_delete)
+# puts 'Enter number to delete'
+# to_delete = gets.chomp.to_i
+# tree.delete(to_delete)
 
-tree.pretty_print
-puts '--------------------------------'
+# tree.pretty_print
+# puts '--------------------------------'
+
+puts "Level order: #{tree.level_order}"
